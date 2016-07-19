@@ -183,7 +183,26 @@ describe('Promises', () => {
     it('should understand Promise.all 3', function (done) {
       Promise.all([1, 2, 3].map(successAsyncAction))
         .then(function (result) {
-          return Math.max.apply(undefined, result);
+          return Math.max(...result);
+        })
+        .then(successCallback, failureCallback);
+
+        verify(() => {
+          expect(__).toHaveBeenCalledWith(___);
+          expect(__).not.toHaveBeenCalled();
+        }, done);
+    });
+
+    it('should understand Promise.all 4', function (done) {
+      let getPerson = function (id: number):Promise<any> {
+        return Promise.resolve({
+          id: id,
+          age: id * 100
+        });
+      };
+      Promise.all([1, 2, 3].map(personId => getPerson(personId).then(p => p.age)))
+        .then(function (result) {
+          return Math.max(...result);
         })
         .then(successCallback, failureCallback);
 
