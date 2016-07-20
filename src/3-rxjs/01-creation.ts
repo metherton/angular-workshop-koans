@@ -19,6 +19,13 @@ describe('Creation', () => {
       .subscribe(x => result += x);
     expect(result).toBe(__);
   });
+  it('should understand fromEvent', function () {
+    let helloElement = document.getElementById('hello'), result = '';
+    Observable.fromEvent(helloElement, 'click').subscribe(() => result = 'clicked');
+    helloElement.click();
+
+    expect(result).toBe(__);
+  })
   it('should understand Subject', function () {
     let subject = new Subject<number>(), result = 0;
     subject.subscribe(x => result += x);
