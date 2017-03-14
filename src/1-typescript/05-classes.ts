@@ -1,9 +1,11 @@
 describe('Typescript - classes', function() {
   const __ = 'replace me so that the test is passing';
   class Person {
+    static count = 0;
     name: string;
 
     constructor(name: string) {
+      Person.count++;
       this.name = name;
     }
 
@@ -11,6 +13,13 @@ describe('Typescript - classes', function() {
       return 'Hello ' + this.name;
     }
   }
+  it('should understand static properties', function() {
+    const count = Person.count;
+
+    const p1 = new Person('John'), p2 = new Person('Tom');
+
+    expect(Person.count).toBe(__);
+  });
   it('have constructor, properties, methods', function() {
     let p = new Person('John');
     expect(p.greet()).toBe(__);
